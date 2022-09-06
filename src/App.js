@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Appbar from "./components/Appbar";
 import Filter from "./components/Filter/Filter";
 import PropertyCard from "./components/PropertyCard";
@@ -8,14 +8,15 @@ import { getProperties } from "./redux/propertySlice";
 import { useSelector } from "react-redux";
 
 function App() {
+  const [searchText, setSearchText] = useState("");
   const totalProperties = useSelector(getProperties);
 
   return (
     <div className="app">
       <Appbar />
       <div className="main-container">
-        <Subheading />
-        <Filter />
+        <Subheading setSearchText={setSearchText} />
+        <Filter searchText={searchText} />
         <div className="card-container">
           {totalProperties.map((property) => {
             return (

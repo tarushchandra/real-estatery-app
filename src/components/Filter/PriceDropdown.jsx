@@ -1,32 +1,40 @@
-import { useSelector, useDispatch } from "react-redux";
-import { getPrice, updatePrice } from "../../redux/propertySlice";
+import { useState } from "react";
 
-const PriceDropdown = () => {
-  const price = useSelector(getPrice);
-  const dispatch = useDispatch();
-  const prices = [
-    "Select Price",
-    "$0 - $1000",
-    "$1000 - $2000",
-    "$2000 - $3000",
-    "$3000 - $4000",
-  ];
+const PriceDropdown = ({ setSelectedPrice }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selected, setSelected] = useState("Select Price");
 
-  function handleChange(e) {
-    dispatch(updatePrice(e.target.value));
+  const prices = ["Range (Any)", "0 - 1000", "1000 - 2000", "3000 - 4000"];
+
+  function handleClick(e) {
+    setSelected(e.target.textContent);
+    setSelectedPrice(e.target.textContent);
+    setIsOpen(false);
   }
 
   return (
     <>
       <div className="query-container">
-        <div>
-          <p className="query">Price Range</p>
-          <select onChange={handleChange}>
-            {prices.map((price) => {
-              return <option>{price}</option>;
-            })}
-          </select>
+        <p className="query">Price Range</p>
+        <div onClick={() => setIsOpen(!isOpen)} className="query-selector">
+          <p>{selected}</p>
+          {isOpen ? (
+            <i className="fa-solid fa-angle-up"></i>
+          ) : (
+            <i className="fa-solid fa-angle-down"></i>
+          )}
         </div>
+        {isOpen && (
+          <div className="query-list">
+            {prices.map((item, index) => {
+              return (
+                <li key={index} onClick={handleClick}>
+                  {item}
+                </li>
+              );
+            })}
+          </div>
+        )}
       </div>
     </>
   );

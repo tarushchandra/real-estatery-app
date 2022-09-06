@@ -1,28 +1,21 @@
 import { useState } from "react";
 
-const CountryDropDown = ({ setSelectedCountry }) => {
+const BedDropdown = ({ setSelectedBeds }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState("Select Location");
+  const [selected, setSelected] = useState("Select Beds");
 
-  const countries = [
-    "Location (Any)",
-    "United States",
-    "Canada",
-    "Brazil",
-    "Mexico",
-    "Cuba",
-  ];
+  const bedrooms = ["Bedrooms (Any)", "1", "2", "3", "4", "more than 4"];
 
   function handleClick(e) {
     setSelected(e.target.textContent);
-    setSelectedCountry(e.target.textContent);
+    setSelectedBeds(e.target.textContent);
     setIsOpen(false);
   }
 
   return (
     <>
       <div className="query-container">
-        <p className="query">Location</p>
+        <p className="query">Bedrooms</p>
         <div onClick={() => setIsOpen(!isOpen)} className="query-selector">
           <p>{selected}</p>
           {isOpen ? (
@@ -33,7 +26,7 @@ const CountryDropDown = ({ setSelectedCountry }) => {
         </div>
         {isOpen && (
           <div className="query-list">
-            {countries.map((item, index) => {
+            {bedrooms.map((item, index) => {
               return (
                 <li key={index} onClick={handleClick}>
                   {item}
@@ -47,4 +40,4 @@ const CountryDropDown = ({ setSelectedCountry }) => {
   );
 };
 
-export default CountryDropDown;
+export default BedDropdown;

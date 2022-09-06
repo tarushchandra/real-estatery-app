@@ -1,29 +1,43 @@
-import { useSelector, useDispatch } from "react-redux";
-import { getPropertyType, updatePropertyType } from "../../redux/propertySlice";
+import { useState } from "react";
 
-const TypeDropdown = () => {
-  const type = useSelector(getPropertyType);
-  const dispatch = useDispatch();
-  const types = ["Select Type", "House", "Apartment"];
+const BedDropdown = ({ setSelectedType }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selected, setSelected] = useState("Select Type");
 
-  function handleChange(e) {
-    dispatch(updatePropertyType(e.target.value));
+  const types = ["Type (Any)", "House", "Apartment"];
+
+  function handleClick(e) {
+    setSelected(e.target.textContent);
+    setSelectedType(e.target.textContent);
+    setIsOpen(false);
   }
 
   return (
     <>
       <div className="query-container">
-        <div>
-          <p className="query">Property Type</p>
-          <select onChange={handleChange}>
-            {types.map((country) => {
-              return <option>{country}</option>;
-            })}
-          </select>
+        <p className="query">Property Type</p>
+        <div onClick={() => setIsOpen(!isOpen)} className="query-selector">
+          <p>{selected}</p>
+          {isOpen ? (
+            <i className="fa-solid fa-angle-up"></i>
+          ) : (
+            <i className="fa-solid fa-angle-down"></i>
+          )}
         </div>
+        {isOpen && (
+          <div className="query-list">
+            {types.map((item, index) => {
+              return (
+                <li key={index} onClick={handleClick}>
+                  {item}
+                </li>
+              );
+            })}
+          </div>
+        )}
       </div>
     </>
   );
 };
 
-export default TypeDropdown;
+export default BedDropdown;

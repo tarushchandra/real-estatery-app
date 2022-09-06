@@ -5,18 +5,17 @@ export const propertySlice = createSlice({
   name: "property",
   initialState: {
     properties: housesData,
-    country: "Select Location",
-    tempCountry: "",
-    date: "Select Move-in Date",
-    price: "Select Price",
-    propertyType: "Select Type",
+    country: "Location (Any)",
+    bedroom: "Bedrooms (Any)",
+    price: "Price (Any)",
+    propertyType: "Type (Any)",
   },
   reducers: {
     updateCountry: (state, action) => {
       state.country = action.payload;
     },
-    updateTempCountry: (state, action) => {
-      state.tempCountry = action.payload;
+    updateBedroom: (state, action) => {
+      state.bedroom = action.payload;
     },
     updatePrice: (state, action) => {
       state.price = action.payload;
@@ -32,15 +31,14 @@ export const propertySlice = createSlice({
 
 export const {
   updateCountry,
-  updateTempCountry,
+  updateBedroom,
   updatePrice,
   updatePropertyType,
   updateProperties,
 } = propertySlice.actions;
 export const getProperties = (state) => state.property.properties;
 export const getCountry = (state) => state.property.country;
-export const getTempCountry = (state) => state.property.tempCountry;
-export const getDate = (state) => state.property.date;
+export const getBedrooms = (state) => state.property.bedroom;
 export const getPrice = (state) => state.property.price;
 export const getPropertyType = (state) => state.property.propertyType;
 export default propertySlice.reducer;
